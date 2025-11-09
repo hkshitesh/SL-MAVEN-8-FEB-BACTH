@@ -19,7 +19,7 @@ public class MyCalc {
 	}
 	public void show()
 	{
-		System.out.println("Hello Jenkins from VCS Batch 11 Oct");
+		System.out.println("Hello Jenkins from SL 1 NOV BATCH!");
 	}
 	public void greeting()
 	{
