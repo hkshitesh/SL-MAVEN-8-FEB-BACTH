@@ -1,51 +1,55 @@
-pipeline {
-    agent any
+pipeline
+{
+	agent any
+		tools
+		{
+			maven 'MAVEN_HOME'
+		}
+		stages
+		{
+			stage('Welcome Stage')
+			{
+				steps
+				{
+					echo 'Welcome to Pipeline'
+				}
+			}
+			
+			stage('Clean Stage')
+			{
+				steps
+				{
+					sh 'mvn clean'
+				}
+			}
+			stage('Build Stage')
+			{
+				steps
+				{
+					sh 'mvn install'
+				}
+			}
+			stage('Build Success')
+			{
+				steps
+				{
+					echo 'Build Success'
+				}
+			}	
 
-    tools {
-        maven 'Maven'
-    }
-
-    environment {
-        IMAGE_NAME = "hkshitesh/cicdimg"
-    }
-
-    stages {
-
-        stage('Clone Repository by Hitesh') {
-            steps {
-                git 'https://github.com/hkshitesh/SL-MAVEN-8-FEB-BACTH.git'
-            }
-        }
-
-        stage('Build Maven Project') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
-            }
-        }
-
-        stage('DockerHub Login') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
-
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                sh 'docker push $IMAGE_NAME:$BUILD_NUMBER'
-            }
-        }
-    }
+			stage('Final Success')
+			{
+				steps
+				{
+					echo 'Final Success'
+				}
+			}	
+			stage('Ultra Success')
+			{
+				steps
+				{
+					echo 'Ultra Success'
+				}
+			}
+		}
 }
